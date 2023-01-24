@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class WallpaperAdapter  extends RecyclerView.Adapter<WallpaperAdapter.WallpaperViewHolder> {
-    private ArrayList<String> list;
+    public ArrayList<String> list;
     private Context context;
 
     public WallpaperAdapter(ArrayList<String> list, Context context) {

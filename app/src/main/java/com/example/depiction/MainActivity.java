@@ -2,14 +2,21 @@ package com.example.depiction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,56 +27,55 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ProgressBar progressBar;
-    private DatabaseReference reference;
-    private ArrayList<String> list;
-    private WallpaperAdapter adapter;
-
-
+    BottomNavigationView bnView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        reference= FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Images");
+        bnView=findViewById(R.id.bnView);
 
-
-        recyclerView=findViewById(R.id.recycleerview);
-        progressBar=findViewById(R.id.progressBar);
-
-        getData();
-
-    }
-
-    private void getData() {
-
-        reference.addValueEventListener(new ValueEventListener() {
+        bnView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
-                list =new ArrayList<>();
-                for(DataSnapshot shot: snapshot.getChildren()){
-                    String data =shot.getValue().toString();
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                    list.add(data);
+                int id =item.getItemId();
+
+                switch (id){
+                    case R.id.nav_home:
+                        loadFragment(new HomeFragment(),false);
+                        break;
+                    case R.id.nav_channel:
+                        loadFragment(new Channel(),false);
+                        break;
+                    case R.id.nav_profile:
+                        loadFragment(new profile(),false);
+                        break;
+                    default:
+                        loadFragment(new HomeFragment(),true);
+                        break;
                 }
 
-                recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this , 3));
-                adapter=new WallpaperAdapter(list,MainActivity.this);
-                recyclerView.setAdapter(adapter);
-                progressBar.setVisibility(View.GONE);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "Error while Fetching...", Toast.LENGTH_LONG).show();
+                return true;
             }
         });
 
+bnView.setSelectedItemId(R.id.nav_home);
+
+
+
     }
+
+
+    public void loadFragment(Fragment fragment,boolean flag){
+        FragmentManager fm =getSupportFragmentManager();
+        FragmentTransaction ft =fm.beginTransaction();
+        if(flag){ft.add(R.id.container,fragment);}
+        else{ft.replace(R.id.container,fragment);}
+        ft.commit();
+
+    }
+
+
 
 }
