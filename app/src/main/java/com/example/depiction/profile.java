@@ -68,7 +68,7 @@ public class profile extends Fragment {
     Button Addimages;
 
     RecyclerView recyclerView;
-    private ArrayList<String> list;
+    private ArrayList<String> list ,UploadRestrictction;
     StorageReference storageReference;
     private WallpaperAdapter adapter;
 
@@ -199,7 +199,36 @@ public class profile extends Fragment {
     public void onClick(View view) {
 
 
-        dataAddingStart();
+        DatabaseReference myRef = database.getReference().child("UploadRestriction");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UploadRestrictction =new ArrayList<>();
+                for(DataSnapshot shot: snapshot.getChildren()){
+                    UploadRestrictction.add(shot.getValue().toString());
+                }
+
+                username = username.replace('_', '.');
+                if( UploadRestrictction.contains("ALLUSERS")){
+                    Toast.makeText(getContext(), "Service is paused ,Cloud storage is under maintenance!", Toast.LENGTH_LONG).show();
+                }
+                else if(UploadRestrictction.contains(username)){
+                    Toast.makeText(getContext(), "Your Account is blocked by depiction!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    dataAddingStart();
+                }
+
+                }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Someting went wrong ,try again!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
     }
 });

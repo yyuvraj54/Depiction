@@ -198,61 +198,81 @@ public class Channel extends Fragment {
         });
 
 
-        DatabaseReference myRef = database.getReference().child("Users");
 
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference RestrictedRef = database.getReference().child("Users").child("RestrictUser");
+
+        RestrictedRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
-                namelist =new ArrayList<>();
-                emaillist =new ArrayList<>();
-                profilelist =new ArrayList<>();
 
                 restrictuser= new ArrayList<>();
                 for(DataSnapshot shot: snapshot.getChildren()){
 
-//                    Toast.makeText(getContext(), shot.child("RestrictUser").getValue().toString(), Toast.LENGTH_SHORT).show();
-//                    if(shot.getValue().toString()=="RestrictUser"){
-//                        for(DataSnapshot bannedUser: shot.getChildren()){
-//                            restrictuser.add(bannedUser.toString());
-//                            Toast.makeText(getContext(), bannedUser.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-
-
-                    if(shot.child("imageslinks").getValue()!=null) {
-                        String name = shot.child("name").getValue().toString();
-                        String email = shot.child("email").getValue().toString();
-
-
-
-                        String profilephoto=shot.child("profileUrl").getValue().toString();
-
-                        namelist.add(name);
-                        emaillist.add(email);
-                        profilelist.add(profilephoto);
-                    }
+                    restrictuser.add(shot.getValue().toString());
                 }
 
 
+                DatabaseReference myRef = database.getReference().child("Users");
+
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        progressBar.setVisibility(View.GONE);
+                        namelist =new ArrayList<>();
+                        emaillist =new ArrayList<>();
+                        profilelist =new ArrayList<>();
+                        for(DataSnapshot shot: snapshot.getChildren()){
+
+                            if(shot.child("email").getValue()!=null) {
+                                String emailids = shot.child("email").getValue().toString();
+
+
+
+                                if (shot.child("imageslinks").getValue() != null && !(restrictuser.contains(emailids))) {
+                                    String name = shot.child("name").getValue().toString();
+                                    String email = shot.child("email").getValue().toString();
+
+
+                                    String profilephoto = shot.child("profileUrl").getValue().toString();
+
+                                    namelist.add(name);
+                                    emaillist.add(email);
+                                    profilelist.add(profilephoto);
+                                }
+                            }
+                        }
+
+
 //                channelRecycleview.setLayoutManager(new GridLayoutManager(getContext(),1));
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL ,false);
-                adapter=new channelAdapter(profilelist,namelist,emaillist,getContext());
-                channelRecycleview.setLayoutManager(linearLayoutManager);
-                channelRecycleview.setAdapter(adapter);
-                progressBar.setVisibility(View.GONE);
+                        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL ,false);
+                        adapter=new channelAdapter(profilelist,namelist,emaillist,getContext());
+                        channelRecycleview.setLayoutManager(linearLayoutManager);
+                        channelRecycleview.setAdapter(adapter);
+                        progressBar.setVisibility(View.GONE);
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        progressBar.setVisibility(View.GONE);
+
+                    }
+                });
 
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.GONE);
 
             }
         });
+
+
+
 //
 
 
