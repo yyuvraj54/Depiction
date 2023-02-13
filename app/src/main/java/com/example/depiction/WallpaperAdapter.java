@@ -34,7 +34,8 @@ public class WallpaperAdapter  extends RecyclerView.Adapter<WallpaperAdapter.Wal
 
     @Override
     public void onBindViewHolder(@NonNull WallpaperViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Glide.with(context).load(list.get(position)).into(holder.imageView);
+        try{Glide.with(context).load(list.get(position)).into(holder.imageView);}
+        catch (Exception e){e.printStackTrace();}
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

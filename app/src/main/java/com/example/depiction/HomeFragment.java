@@ -1,5 +1,7 @@
 package com.example.depiction;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +24,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private DatabaseReference reference;
-    private ArrayList<String> list;
+    private DatabaseReference reference ,childreference;
+    private ArrayList<String> list ,linklist;
     private WallpaperAdapter adapter;
 
 
@@ -36,7 +41,7 @@ public class HomeFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_home, container, false);
 
-        reference= FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Images");
+        reference= FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("ViewPort");
 
 
         recyclerView=view.findViewById(R.id.recycleerview);
@@ -52,12 +57,37 @@ public class HomeFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
                 list =new ArrayList<>();
                 for(DataSnapshot shot: snapshot.getChildren()){
-                    String data =shot.getValue().toString();
-                    list.add(data);
+                    String page=shot.getValue().toString();
+                    String substring="@gmail_com";
+//                    Toast.makeText(getContext(), page, Toast.LENGTH_SHORT).show();
+                  childreference= FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child(page);
+//                    childreference= FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("Users/"+page+'/'+"imageslinks");
+
+                    childreference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            linklist =new ArrayList<>();
+                            progressBar.setVisibility(View.GONE);
+                            for(DataSnapshot shot:snapshot.getChildren()){
+                                String link=shot.getValue().toString();
+                                linklist.add(link);
+                            }
+
+                            list.addAll(linklist);
+                            Collections.shuffle(list);
+                            adapter.notifyDataSetChanged();
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                 }
+
+                Log.d(TAG, "onDataChange: "+list);
 
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                 adapter=new WallpaperAdapter(list,getContext());

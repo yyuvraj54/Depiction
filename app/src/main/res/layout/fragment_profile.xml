@@ -17,15 +17,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/profile_nav"
+            android:orientation="horizontal"
+            android:paddingTop="45dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="20dp">
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/appinfo"
+                android:src="@drawable/info"
+                app:backgroundTint="#F6F3F3" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/deletefab"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginLeft="20dp"
+                android:contentDescription="@string/appinfo"
+                android:src="@drawable/wast"
+                app:backgroundTint="#F6F4F4" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/profileimage"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="35dp"
-                android:src="@drawable/depiction" />
+                android:layout_marginTop="10dp"
+
+                android:elevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <ImageView
+                    android:id="@+id/profileimage"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:src="@drawable/depiction" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/userName"
@@ -33,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="2dp"
-                android:text="Yuraj Singh Yadav"
+                android:text="Name"
 
                 android:fontFamily="sans-serif-black"
                 android:textSize="22sp" />
@@ -43,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="yyuvraj54@gmail.com"
+                android:text="Email"
                 android:fontFamily="@font/architects_daughter"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -69,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="10dp"
+                android:layout_marginHorizontal="30dp"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="Sign up with your google accout to access all features of app" />
 
@@ -99,15 +140,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
+                    android:layout_margin="30dp"
+                    android:background="@drawable/add_button"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Sign Out" />
+                    android:text="Sign Out"
+                    android:textColor="#000000" />
 
                 <Button
                     android:id="@+id/addImages"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
-                    android:text="add" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/add_button"
+                    android:text="add Wallpaper"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#C62727" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -117,11 +165,28 @@
                     android:fontFamily="sans-serif-black"
                     android:text="Uploaded Photos" />
 
+                <ProgressBar
+                    android:id="@+id/progressBarProfile"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/profileuploadedpic"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
+
+                <TextView
+                    android:id="@+id/Emptytext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="No uploaded wallpaper Found! upload now to create your channel! "
+                    android:textColor="#D89B41"
+                    android:visibility="gone" />
+
 
             </LinearLayout>
         </ScrollView>

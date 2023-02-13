@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,8 +58,9 @@ public class profile extends Fragment {
     GoogleSignInClient gsc;
     SignInButton googleBtn ;
     Button signOut;
+    public String proiflephoto;
     TextView nametext;
-    TextView emailtext;
+    TextView emailtext , recycleEmptytext;
 
     ImageView proimage;
     ScrollView scrollFrame;
@@ -68,6 +72,7 @@ public class profile extends Fragment {
     StorageReference storageReference;
     private WallpaperAdapter adapter;
 
+    ProgressBar progressBar;
 
 
     @Override
@@ -75,6 +80,7 @@ public class profile extends Fragment {
                              Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_profile, container, false);
 
+        recycleEmptytext=view.findViewById(R.id.Emptytext);
         googleBtn=view.findViewById(R.id.google_btn);
         proimage=view.findViewById(R.id.profileimage);
         nametext=view.findViewById(R.id.userName);
@@ -84,6 +90,7 @@ public class profile extends Fragment {
         logFrame=view.findViewById(R.id.logframe);
         Addimages=view.findViewById(R.id.addImages);
         recyclerView=view.findViewById(R.id.profileuploadedpic);
+        progressBar=view.findViewById(R.id.progressBarProfile);
 
         gso=new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc= GoogleSignIn.getClient(getContext(),gso);
@@ -113,6 +120,7 @@ public class profile extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                progressBar.setVisibility(View.GONE);
                 list =new ArrayList<>();
                 for(DataSnapshot shot: snapshot.getChildren()){
                     String data =shot.getValue().toString();
@@ -121,10 +129,19 @@ public class profile extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
                 adapter=new WallpaperAdapter(list,getContext());
                 recyclerView.setAdapter(adapter);
+                progressBar.setVisibility(View.GONE);
+
+                if(list.isEmpty()){
+                    recycleEmptytext.setVisibility(View.VISIBLE);
+                }
+                else{
+                    recycleEmptytext.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
             }
         });
         googleBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,12 +163,41 @@ public class profile extends Fragment {
                 });
             }
         });
+        FloatingActionButton fab2 = view.findViewById(R.id.deletefab);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getContext(),DeleteImage.class);
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
+                try{
+                    String usname=account.getEmail();
+                    intent.putExtra("username",usname);
+                    startActivity(intent);}
+                catch (Exception e){
+                    String usname="Noname";
+                    intent.putExtra("username",usname);
+                    startActivity(intent);
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                        Intent intent=new Intent(getContext(),AboutApp.class);
+                        startActivity(intent);
+            }
+        });
 
         Addimages.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
+
 
         dataAddingStart();
 
@@ -240,10 +286,16 @@ public class profile extends Fragment {
             handleSignInResult(task);
         }
         else if (requestCode==110) {
-            Uri uridata =data.getData();
-            GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getContext());
-            String personEmail = acct.getEmail();
-            uploadDataToFirebaseStorage(personEmail,uridata);
+            try {
+                Uri uridata =data.getData();
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getContext());
+                String personEmail = acct.getEmail();
+                uploadDataToFirebaseStorage(personEmail,uridata);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
 
         }
     }
@@ -258,6 +310,52 @@ public class profile extends Fragment {
             // Signed in successfully, show authenticated UI.
             uiElementUpdate(true);
             UIupdate();
+            username=account.getEmail();
+            username=username.replace('.','_');
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://depiction-d1b54-default-rtdb.asia-southeast1.firebasedatabase.app/");
+            DatabaseReference myRef = database.getReference().child("Users/"+username).child("name");
+            myRef.setValue(account.getDisplayName());
+
+            database.getReference().child("Users/"+username).child("email").setValue(account.getEmail());
+
+            try{String proiflephoto=account.getPhotoUrl().toString();
+                database.getReference().child("Users/"+username).child("profileUrl").setValue(proiflephoto);
+            }catch (Exception e){proiflephoto="nullImage";e.printStackTrace();
+                database.getReference().child("Users/"+username).child("profileUrl").setValue(proiflephoto);}
+
+
+
+
+            DatabaseReference myRefnew = database.getReference().child("Users/"+username+'/'+"imageslinks");
+            myRefnew.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    list =new ArrayList<>();
+                    progressBar.setVisibility(View.GONE);
+                    for(DataSnapshot shot: snapshot.getChildren()){
+                        String data =shot.getValue().toString();
+                        list.add(data);
+                    }
+                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                    adapter=new WallpaperAdapter(list,getContext());
+                    recyclerView.setAdapter(adapter);
+                    progressBar.setVisibility(View.GONE);
+
+                    if(list.isEmpty()){
+                        recycleEmptytext.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        recycleEmptytext.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    progressBar.setVisibility(View.GONE);
+
+                }
+            });
 
         } catch (ApiException e) {
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
@@ -270,11 +368,16 @@ public class profile extends Fragment {
         String personname = acct.getDisplayName();
         String personEmail = acct.getEmail();
         String personPhoto = String.valueOf(acct.getPhotoUrl());
+        if(personPhoto =="nullImage"){proimage.setImageResource(R.drawable.depiction);}
+        else{
         try {
-            Glide.with(this).load(personPhoto).into(proimage);
+            Glide.with(getContext()).load(personPhoto).placeholder(R.drawable.depiction).error(R.drawable.depiction).into(proimage);
         }catch (Exception e){
             proimage.setImageResource(R.drawable.depiction);
             e.printStackTrace();
+            Log.d(TAG, "UIupdate: error from here");
+
+        }
         }
 
 
@@ -285,8 +388,8 @@ public class profile extends Fragment {
     void uiElementUpdate(boolean flag){
 
         if(flag){
-            proimage.getLayoutParams().height = 90;
-            proimage.getLayoutParams().width = 90;
+            proimage.getLayoutParams().height = 120;
+            proimage.getLayoutParams().width = 120;
             proimage.requestLayout();
             logFrame.setVisibility(View.GONE);
             scrollFrame.setVisibility(View.VISIBLE);
@@ -313,6 +416,7 @@ public class profile extends Fragment {
 
     private void deleteAllItem() {
         list =new ArrayList<>();
+        list.clear();
         adapter=new WallpaperAdapter(list,getContext());
         recyclerView.setAdapter(adapter);
     }

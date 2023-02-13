@@ -1,59 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="match_parent"
+        android:layout_width="260dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
         android:layout_height="200dp"
         android:layout_margin="20dp"
-        app:cardCornerRadius="10dp"
-        android:background="@color/black">
+        android:elevation="20dp"
+        android:background="@color/black"
+
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:background="@drawable/cardback"
             android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:elevation="10dp"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:id="@+id/Channelprofile"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:srcCompat="@drawable/depiction" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textColor="#E14E4E"
-                    android:fontFamily="@font/architects_daughter"
-                    android:text="Author:" />
 
                 <TextView
                     android:id="@+id/AuthroName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/architects_daughter"
-                    android:text="Author Name:" />
+                    android:fontFamily="sans-serif-black"
+                    android:text="Author Name:"
+                    android:textColor="@color/white"
+                    android:textSize="23sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textColor="#FFC107"
-                    android:fontFamily="@font/architects_daughter"
-                    android:text="Email ID:" />
 
                 <TextView
                     android:id="@+id/AuthorEmail"
@@ -61,8 +68,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:fontFamily="@font/architects_daughter"
-                    android:text="Its yyuvrak@534gmail.com" />
+                    android:text="Its yyuvrak@534gmail.com"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
             </LinearLayout>
+
         </LinearLayout>
 
 
