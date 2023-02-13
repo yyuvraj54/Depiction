@@ -9,3 +9,9 @@ For an ease and keeping diffrent users in mind thire is a dedicated categories s
 
 depiction is made with proper user profile management and keeps records of every file that is uploaded and hence all the data is secure and non menacing.
 
+# About
+
+Depiction application is fully java based application which is developed using android studio and currently running in api level 30 that allows all the current device to install this applicaiton and use all kinds of features.
+
+
+Decpiction is designed and developed by Yuvraj Singh Yadav.
