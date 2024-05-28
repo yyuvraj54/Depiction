@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.depiction.Ai.Ai_fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_channel:
                         loadFragment(new Channel(),false);
                         break;
+                    case R.id.nav_AI:
+                            loadFragment(new Ai_fragment(),false);
+                            break;
                     case R.id.nav_profile:
                         loadFragment(new profile(),false);
                         break;
