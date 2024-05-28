@@ -11,7 +11,7 @@
 
     <item android:id="@+id/nav_AI"
         android:title="AI"
-        android:icon="@drawable/baseline_person_24"/>
+        android:icon="@drawable/ai"/>
 
 
     <item android:id="@+id/nav_profile"
