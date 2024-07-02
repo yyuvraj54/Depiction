@@ -1,4 +1,4 @@
-package com.example.depiction;
+package com.example.depiction.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.depiction.R;
 
 import java.io.IOException;
 

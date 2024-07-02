@@ -1,6 +1,4 @@
-package com.example.depiction;
-
-import static android.content.ContentValues.TAG;
+package com.example.depiction.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +6,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.depiction.Adapters.channelAdapter;
+import com.example.depiction.R;
+import com.example.depiction.Activities.inbuildChannel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,7 +58,7 @@ public class Channel extends Fragment {
         animewall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inbuildpage=new Intent(getContext(),inbuildChannel.class);
+                Intent inbuildpage=new Intent(getContext(), inbuildChannel.class);
                 inbuildpage.putExtra("pageHeading","Anime");
                 DatabaseReference animeWall=database.getReference().child("Anime");
                 animeWall.addValueEventListener(new ValueEventListener() {

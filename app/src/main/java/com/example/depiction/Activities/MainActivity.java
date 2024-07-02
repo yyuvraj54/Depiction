@@ -1,12 +1,10 @@
-package com.example.depiction;
+package com.example.depiction.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -16,20 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.depiction.Ai.Ai_fragment;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.example.depiction.Fragments.Channel;
+import com.example.depiction.Fragments.HomeFragment;
+import com.example.depiction.R;
+import com.example.depiction.Fragments.profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

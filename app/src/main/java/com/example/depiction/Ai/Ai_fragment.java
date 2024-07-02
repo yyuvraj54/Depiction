@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.depiction.R;
-import com.example.depiction.WallpaperAdapter;
+import com.example.depiction.Adapters.WallpaperAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

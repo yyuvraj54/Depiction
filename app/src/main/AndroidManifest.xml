@@ -15,25 +15,25 @@
         android:theme="@style/Theme.Depiction"
         tools:targetApi="31">
         <activity
-            android:name=".inbuildChannel"
+            android:name=".Activities.inbuildChannel"
             android:exported="false" />
         <activity
-            android:name=".DeleteImage"
+            android:name=".Activities.DeleteImage"
             android:exported="false" />
         <activity
-            android:name=".AboutApp"
+            android:name=".Activities.AboutApp"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ProfileChannel"
+            android:name=".Fragments.ProfileChannel"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FullImageActivity"
+            android:name=".Activities.FullImageActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

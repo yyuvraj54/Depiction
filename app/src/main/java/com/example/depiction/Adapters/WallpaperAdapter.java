@@ -1,4 +1,4 @@
-package com.example.depiction;
+package com.example.depiction.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.depiction.Activities.FullImageActivity;
+import com.example.depiction.R;
 
 import java.util.ArrayList;
 
@@ -39,7 +41,7 @@ public class WallpaperAdapter  extends RecyclerView.Adapter<WallpaperAdapter.Wal
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context,FullImageActivity.class);
+                Intent intent=new Intent(context, FullImageActivity.class);
                 intent.putExtra("image",list.get(position));
                 context.startActivity(intent);
             }

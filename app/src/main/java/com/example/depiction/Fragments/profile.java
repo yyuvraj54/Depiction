@@ -1,4 +1,4 @@
-package com.example.depiction;
+package com.example.depiction.Fragments;
 
 import static android.content.ContentValues.TAG;
 
@@ -25,6 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.depiction.Activities.AboutApp;
+import com.example.depiction.Adapters.WallpaperAdapter;
+import com.example.depiction.Activities.DeleteImage;
+import com.example.depiction.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,7 +40,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -167,7 +170,7 @@ public class profile extends Fragment {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),DeleteImage.class);
+                Intent intent=new Intent(getContext(), DeleteImage.class);
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
                 try{
                     String usname=account.getEmail();
@@ -189,7 +192,7 @@ public class profile extends Fragment {
             @Override
             public void onClick(View view) {
 
-                        Intent intent=new Intent(getContext(),AboutApp.class);
+                        Intent intent=new Intent(getContext(), AboutApp.class);
                         startActivity(intent);
             }
         });
