@@ -17,28 +17,23 @@ Depiction is a fully Java-based application developed using Android Studio and c
 <details>
 <summary>Click to expand the list of topics</summary>
 
-1. Image Loading and Display
-2. RecyclerView
-3. ScrollView
-4. Firebase Database
-5. Firebase Realtime
-6. Java Adapters 
-7. Image Caching
-8. Image Compression
-9. Image Processing
-10. Image Metadata
-11. Glide or Picasso
-12. Handling Image Clicks
+1. OpenAi (Genrative Images)
+2. Volley
+3. RecyclerView
+4. Firebase Authentication
+5. Firebase Database
+6. Firebase Realtime
+7. Java Adapters 
+8. Image Caching
+9. Image Compression
+10. Image Processing
+12. Glide
 13. Permissions
 14. Networking
 15. Error Handling
-16. UI/UX Design
-17. Material Design
-18. Testing
-19. Accessibility
-20. Performance Optimization
-21. Data Persistence
-22. Analytics and Monitoring
+16. Material Design
+17. Data Persistence
+
 
 </details>
 
