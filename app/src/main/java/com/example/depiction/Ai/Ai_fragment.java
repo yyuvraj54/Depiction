@@ -116,7 +116,7 @@ public class Ai_fragment extends Fragment {
                             String errorString = new String(response.data);
                             Log.e(TAG, "Error: " + errorString);
                         }
-                        Toast.makeText(getContext(), "API call failed: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "APIKEY error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override

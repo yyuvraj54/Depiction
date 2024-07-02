@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:backgroundTint="#2D2D2D"
     android:background="#f0f0f0">
 
     <TextView
@@ -15,7 +16,7 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:paddingBottom="16dp"
-        android:textColor="#000"/>
+        android:textColor="#FFFFFF"/>
 
     <EditText
         android:id="@+id/etTextAi"
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="Enter text to generate images"
         android:padding="12dp"
+        android:textColor="@color/black"
         android:background="@drawable/rounded_edittext"
         android:layout_below="@+id/tvTitle"
         android:layout_marginTop="16dp"
@@ -39,17 +41,37 @@
         android:layout_below="@+id/etTextAi"
         android:layout_marginBottom="16dp"/>
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvImagesAi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/btnGenerate"
-        android:padding="4dp"
-        android:clipToPadding="false"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:scrollbars="vertical"
-        android:background="#fff"
+        android:background="#2D2D2D"
+        android:clipToPadding="false"
+        android:dividerHeight="8dp"
         android:overScrollMode="never"
-        android:dividerHeight="8dp"/>
+        android:padding="4dp"
+        android:scrollbars="vertical">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/TextText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/rvImagesAi"
+        android:layout_alignBottom="@+id/rvImagesAi"
+        android:layout_marginTop="213dp"
+        android:layout_marginBottom="217dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text="Please search your ai genrated image!"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
